@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 import { getUnreadAnnouncements } from '../../services/announcementUtils';
 import type { Announcement } from '../../types/announcement';
 import AnnouncementCard from './AnnouncementCard';
+import SectionHeading from './SectionHeading';
 
 const sampleAnnouncements: Announcement[] = [
   {
@@ -42,44 +43,40 @@ export default function AnnouncementPanel() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Campus Announcements</Text>
-      <Text style={styles.summary}>
-        Total announcements: {announcements.length}
-      </Text>
-      <Text style={styles.counter}>
-        Unread announcements: {unreadCount}
-      </Text>
-      {announcements.map(announcement => (
-        <AnnouncementCard
-          key={announcement.id}
-          title={announcement.title}
-          category={announcement.category}
-          read={announcement.read}
-          onMarkRead={() => handleToggleRead(announcement.id)}
-        />
-      ))}
+      <FlatList
+        data={announcements}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <SectionHeading
+            title="Campus Announcements"
+            subtitle={`${announcements.length} total • ${unreadCount} unread`}
+          />
+        }
+        renderItem={({ item }) => (
+          <AnnouncementCard
+            title={item.title}
+            category={item.category}
+            read={item.read}
+            onMarkRead={() => handleToggleRead(item.id)}
+          />
+        )}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     width: '100%',
-    marginTop: 24,
+    maxWidth: 640,
+    alignSelf: 'center',
+    marginTop: 12,
   },
-  heading: {
-    fontSize: 21,
-    fontWeight: '700',
-    marginBottom: 10,
-  },
-  summary: {
-    fontSize: 15,
-    marginBottom: 6,
-  },
-  counter: {
-    fontSize: 15,
-    fontWeight: '600',
-    marginBottom: 4,
-    color: '#2563EB',
+  listContent: {
+    paddingBottom: 24,
+    gap: 8,
   },
 });

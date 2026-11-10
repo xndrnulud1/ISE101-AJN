@@ -1,31 +1,26 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import AnnouncementPanel from '@/components/AnnouncementPanel';
+import SectionHeading from '@/components/SectionHeading';
 
 export default function HomeScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View>
-        <Text style={styles.title}>Campus Connect</Text>
-        <Text style={styles.subtitle}>One campus. Connected students.</Text>
-      </View>
+    <View style={styles.screen}>
+      <SectionHeading
+        title="Campus Connect"
+        subtitle="One campus. Connected students."
+      />
       <AnnouncementPanel />
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 24,
+  screen: {
+    flex: 1,
     backgroundColor: '#F4F7FB',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 15,
+    paddingHorizontal: 20,
+    paddingTop: 32,
+    paddingBottom: 24,
   },
 });
