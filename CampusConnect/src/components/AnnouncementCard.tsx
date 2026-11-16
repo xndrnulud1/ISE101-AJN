@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ActionButton from './ActionButton';
 
@@ -7,6 +7,7 @@ type AnnouncementCardProps = {
   category: string;
   read: boolean;
   onMarkRead: () => void;
+  onPress?: () => void;
 };
 
 export default function AnnouncementCard({
@@ -14,18 +15,21 @@ export default function AnnouncementCard({
   category,
   read,
   onMarkRead,
+  onPress,
 }: AnnouncementCardProps) {
   return (
     <View style={styles.card}>
-      <View style={styles.headerRow}>
-        <Text style={styles.title}>{title}</Text>
-        <View style={[styles.badge, read ? styles.readBadge : styles.unreadBadge]}>
-          <Text style={styles.badgeText}>{read ? 'Read' : 'New'}</Text>
+      <Pressable onPress={onPress} accessibilityRole="button">
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>{title}</Text>
+          <View style={[styles.badge, read ? styles.readBadge : styles.unreadBadge]}>
+            <Text style={styles.badgeText}>{read ? 'Read' : 'New'}</Text>
+          </View>
         </View>
-      </View>
 
-      <Text style={styles.category}>Category: {category}</Text>
-      <Text style={styles.status}>Status: {read ? 'Read' : 'Unread'}</Text>
+        <Text style={styles.category}>Category: {category}</Text>
+        <Text style={styles.status}>Status: {read ? 'Read' : 'Unread'}</Text>
+      </Pressable>
 
       <ActionButton
         label={read ? 'Mark as Unread' : 'Mark as Read'}

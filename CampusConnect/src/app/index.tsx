@@ -1,3 +1,4 @@
+
 import { StyleSheet, View } from 'react-native';
 
 import AnnouncementPanel from '@/components/AnnouncementPanel';
@@ -10,6 +11,7 @@ export default function HomeScreen() {
         title="Campus Connect"
         subtitle="One campus. Connected students."
       />
+
       <AnnouncementPanel />
     </View>
   );

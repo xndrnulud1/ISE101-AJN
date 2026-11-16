@@ -6,7 +6,7 @@ import type { Announcement } from '../../types/announcement';
 import AnnouncementCard from './AnnouncementCard';
 import SectionHeading from './SectionHeading';
 
-const sampleAnnouncements: Announcement[] = [
+export const sampleAnnouncements: Announcement[] = [
   {
     id: 'ANN-001',
     title: 'Enrollment Reminder',
@@ -27,7 +27,13 @@ const sampleAnnouncements: Announcement[] = [
   },
 ];
 
-export default function AnnouncementPanel() {
+type AnnouncementPanelProps = {
+  onSelectAnnouncement?: (announcement: Announcement) => void;
+};
+
+export default function AnnouncementPanel({
+  onSelectAnnouncement,
+}: AnnouncementPanelProps) {
   const [announcements, setAnnouncements] = useState(sampleAnnouncements);
   const unreadCount = getUnreadAnnouncements(announcements).length;
 
@@ -60,6 +66,7 @@ export default function AnnouncementPanel() {
             category={item.category}
             read={item.read}
             onMarkRead={() => handleToggleRead(item.id)}
+            onPress={() => onSelectAnnouncement?.(item)}
           />
         )}
       />
